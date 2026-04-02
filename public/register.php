@@ -17,10 +17,10 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-   <!-- Custom styles for this template-->
-  <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
-  <link href="assets/css/sb-admin-2.css" rel="stylesheet">
-    
+    <!-- Custom styles for this template-->
+    <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="assets/css/sb-admin-2.css" rel="stylesheet">
+
 
 </head>
 
@@ -42,34 +42,39 @@
                                 <h3 class="h6 text-gray-700 mb-4">Enter your personal details to join Us!.</h3>
                             </div>
 
-                             <div class="text center ">
-                                    <p class="fs-5">Tell us who you are!</p>
+                            <div class="d-flex align-items-center my-3">
+                                    <hr class="flex-grow-3">
+                                        <span class="mx-2 text-muted">Tell us who you are!</span>
+                                    <hr class="flex-grow-1">
                                 </div>
 
                             <form class="user needs-validation" autocomplete="off" method="post" action="../app/controllers/registerController.php" enctype="multipart/form-data" novalidate>
                                 <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control" id="firstName"
-                                            placeholder="First Name" required>
+                                    <div class="col-sm-6 mb-2 mb-sm-0">
+                                        <label for="firstName" class="form-label mb-1">First Name</label>
+                                        <input type="text" class="form-control form-control" id="firstName" name="firstName"
+                                            placeholder="ex. John Mark" required>
                                         <div class="invalid-feedback">
                                             Please enter your first name.
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control" id="middleName"
-                                            placeholder="Middle Name" required>
+                                        <label for="middleName" class="form-label mb-1">Middle Name</label>
+                                        <input type="text" class="form-control form-control" id="middleName" name="middleName"
+                                            placeholder="optional. ex. Lopez" >
                                         <div class="invalid-feedback">
                                             Please enter your middle name.
                                         </div>
                                     </div>
                                 </div>
 
-                               
+
                                 <div class="form-group row">
                                     <div class="col-sm-12 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control" id="lastName"
-                                            placeholder="Last Name" required>
-                                            <div class="invalid-feedback">
+                                        <label for="lastName" class="form-label mb-1">Last Name</label>
+                                        <input type="text" class="form-control form-control" id="lastName " name="lastName"
+                                            placeholder="ex. Dela Cruz" required>
+                                        <div class="invalid-feedback">
                                             Please enter your last name.
                                         </div>
                                     </div>
@@ -78,79 +83,95 @@
 
                                 <div class="form-group row">
                                     <div class="col-sm-12 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control" id="emailAddress"
-                                            placeholder="Email Address" required>
-                                            <div class="invalid-feedback">
+                                        <label for="emailAddress" class="form-label mb-1">Email Address</label>
+                                        <input type="email" class="form-control form-control" id="emailAddress " name="emailAddress"
+                                            placeholder="ex. john.doe@example.com" required>
+                                        <div class="invalid-feedback">
                                             Please enter your email address.
                                         </div>
                                     </div>
                                 </div>
 
+                                <div class="form-group row">
+                                    <div class="col-sm-12 mb-3 mb-sm-0">
+                                        <label for="username" class="form-label mb-1">Username</label>
+                                        <input type="text" class="form-control form-control" id="username" name="username"
+                                            placeholder="ex. john.doe" required>
+                                        <div class="invalid-feedback">
+                                            Please enter a username.
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="firstName" class="form-label mb-1">First Name</label>
                                         <input type="password" class="form-control form-control"
-                                            id="exampleInputPassword" placeholder="Password" required>
-                                            <div class="invalid-feedback">
+                                            id="password" name="password" placeholder="" required>
+                                        <div class="invalid-feedback">
                                             Please enter a password.
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
+                                        <label for="exampleRepeatPassword" class="form-label mb-1">Repeat Password</label>
                                         <input type="password" class="form-control form-control"
-                                            id="exampleRepeatPassword" placeholder="Repeat Password" required>
-                                            <div class="invalid-feedback">
-                                            Please repeat your password.
+                                            id="repeatPassword" name="repeatPassword" placeholder="" required>
+                                        <div class="invalid-feedback">
+                                            Password don't match.
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="text center ">
-                                    <p class="fs-5">Tell us where you live!</p>
+                                <div class="d-flex align-items-center my-3">
+                                    <hr class="flex-grow-3">
+                                        <span class="mx-2 text-muted">Tell us where you live!</span>
+                                    <hr class="flex-grow-1">
                                 </div>
+
 
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="street" class="form-label mb-1">Street Address</label>
                                         <input type="text" class="form-control form-control"
-                                            id="street" placeholder="Street Address" required>
-                                            <div class="invalid-feedback">
+                                            id="street" name="street" placeholder="ex. Gayloa St." required>
+                                        <div class="invalid-feedback">
                                             Please enter your street address.
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
+                                        <label for="barangay" class="form-label mb-1">Barangay</label>
                                         <input type="text" class="form-control form-control"
-                                            id="barangay" placeholder="Barangay" required>
-                                            <div class="invalid-feedback">
+                                            id="barangay" name="barangay" placeholder="ex. Barangay 3" required>
+                                        <div class="invalid-feedback">
                                             Please enter your barangay.
                                         </div>
                                     </div>
                                 </div>
 
 
-
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="city" class="form-label mb-1">City</label>
                                         <input type="text" class="form-control form-control"
-                                            id="state" placeholder="City" required>
-                                            <div class="invalid-feedback">
+                                            id="city" name="city" placeholder=" ex. Cagayan de Oro" required>
+                                        <div class="invalid-feedback">
                                             Please enter your city.
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
+                                        <label for="zip" class="form-label mb-1">Zip Code</label>
                                         <input type="text" class="form-control form-control"
-                                            id="zip" placeholder="Zip Code" required>
-                                            <div class="invalid-feedback">
+                                            id="zip" name="zip" placeholder="ex. 9000" required>
+                                        <div class="invalid-feedback">
                                             Please enter your zip code.
                                         </div>
                                     </div>
                                 </div>
 
-
                                 <button type="submit" name="register" class="btn btn-primary btn-user btn-block">
                                     Create Account
                                 </button>
-
-                              
-
 
                             </form>
                             <hr>
@@ -205,7 +226,7 @@
     <script src="assets/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-     <script src="assets/js/register-form.js"></script>
+    <script src="assets/js/register-form.js"></script>
 
     <script src="assets/js/sb-admin-2.min.js"></script>
 
