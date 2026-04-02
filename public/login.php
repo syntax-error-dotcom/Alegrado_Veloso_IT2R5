@@ -11,7 +11,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Login</title>
+  <title>Login</title>
 
   <!-- Custom fonts for this template-->
   <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -97,8 +97,11 @@
 
   </div>
 
+  <!-- sweetAlert2 Link -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <?php
-  session_start(); // make sure session is started at the very top of the file
+
 
   if (isset($_SESSION['message']) && $_SESSION['code'] != '') {
   ?>
@@ -141,8 +144,8 @@
   <!-- Custom scripts for all pages-->
   <script src="assets/js/sb-admin-2.min.js"></script>
 
-  <!-- sweetAlert2 Link -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  
 
 </body>
 

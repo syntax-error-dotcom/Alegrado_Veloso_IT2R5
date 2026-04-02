@@ -3,6 +3,23 @@ session_start();
 $root = dirname(__DIR__);
 include($root . '/config/config.php');
 
+function _generateUUID() {
+    return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+        mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+        mt_rand(0, 0xffff),
+        mt_rand(0, 0x0fff) | 0x4000,
+        mt_rand(0, 0x3fff) | 0x8000,
+        mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+    );
+
+
+
+};
+
+
+
+
+
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -40,20 +57,94 @@ if (isset($_POST['login'])) {
                 header("Location: /eLibrary/public/admin/index");
                 exit();
             } else {
-                header("Location: /eLibrary/public/user/index");
+                header("Location: /eLibrary/public/user/index.html");
                 exit();
             }
         } else {
             $_SESSION['message'] = "Invalid username or password.";
-            $_SESSION['code'] = "error";
+            $_SESSION['code'] = "warning";
             header("Location: /eLibrary/public/login");
             exit();
         }
     } else {
         $_SESSION['message'] = "Something went wrong: " . $conn->error . " Please try again.";
-        $_SESSION['code'] = "error";
+        $_SESSION['code'] = "warning";
         header("Location: /eLibrary/public/login");
         exit();
     }
 }
+
+
+if (isset($_POST['register'])) {
+    $firstname = $_POST['firstName'];
+    $middlename = $_POST['middleName'];
+    $lastname = $_POST['lastName'];
+    $email = $_POST['emailAddress'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $repeatPassword = $_POST['repeatPassword'];
+    $street = $_POST['street'];
+    $barangay = $_POST['barangay'];
+    $city = $_POST['city'];
+    $role = 'user'; 
+    $uuid = _generateUUID();
+
+
+    //Validates format of email address
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['message'] = "Invalid email format.";
+        $_SESSION['code'] = "error";
+        header("Location: /eLibrary/public/register");
+        exit();
+    }
+
+    //checks if emailAddress already exists in the database
+    $checkQuery = mysqli_query($conn, "SELECT id from users where 
+    emailAddress='$email' LIMIT 1"); 
+    if ($checkQuery && mysqli_num_rows($checkQuery) > 0) {
+        $_SESSION['message'] = "Email address already exists.";
+        $_SESSION['code'] = "error";
+        header("Location: /eLibrary/public/register");
+        exit();
+    }
+
+    //checks if username already exists in the database
+    $checkQuery = mysqli_query($conn, "SELECT id from users where 
+    username='$username' LIMIT 1");
+    if ($checkQuery && mysqli_num_rows($checkQuery) > 0) {
+        $_SESSION['message'] = "Username already exists.";
+        $_SESSION['code'] = "error";
+        header("Location: /eLibrary/public/register");
+        exit();
+    }
+
+
+    if ($password !== $repeatPassword) {
+        $_SESSION['message'] = "Passwords do not match.";
+        $_SESSION['code'] = "error";
+        header("Location: /eLibrary/public/register");
+        exit();
+    }
+
+   $stmt = $conn->prepare("INSERT INTO users 
+    (uuid, firstName, middleName, lastName, emailAddress, username, password, street, barangay, city, role) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssssssss", $uuid, $firstname, $middlename, $lastname, $email, $username, $password, $street, $barangay, $city, $role);
+    
+
+
+    if($stmt->execute()) {
+        $_SESSION['message'] = "Registration successful! Please log in.";
+        $_SESSION['code'] = "success";
+        header("Location: /eLibrary/public/login");
+        exit();
+    } else {
+        $_SESSION['message'] = "Something went wrong: " . mysqli_error($conn) . " Please try again.";
+        $_SESSION['code'] = "error";
+        header("Location: /eLibrary/public/register");
+        exit();
+    }
+
+}
+
 ?>
