@@ -21,9 +21,9 @@ if (isset($_POST['login'])) {
         if ($result && $result->num_rows > 0) {
             $database = $result->fetch_assoc();
 
-            $user_id  = $database['uuid']; // or 'id' if that’s your PK
+            $user_id  = $database['uuid']; // 
             $fullname = $database['firstName'] . ' ' . $database['lastName'];
-            $userRole = $database['role'];
+            $userRole = $database['role']; 
 
             $_SESSION['user_id'] = $user_id;
             $_SESSION['role'] = $userRole;
