@@ -71,10 +71,11 @@ body {
 
 
 #login-background {
-  background-image: url('/assets/img/library.jpg');
+  
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-color: rgba(51, 82, 110, 0.5);
 
 }
 
