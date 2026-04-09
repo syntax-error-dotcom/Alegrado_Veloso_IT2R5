@@ -11,6 +11,9 @@ include('./includes/topbar.php');
 
 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h2 mb-1 text-gray-800">Welcome back, Admin!</h1>
+                    </div>
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -342,5 +345,7 @@ include('./includes/topbar.php');
 
 
 <?php
+
+
 include(__DIR__ . './includes/footer.php');
 ?>
