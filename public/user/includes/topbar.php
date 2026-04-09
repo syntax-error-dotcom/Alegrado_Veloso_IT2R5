@@ -195,7 +195,7 @@
                                 
                                 <div class="dropdown-divider"></div>
                                 
-                                <<form action="../../app/controllers/adminController.php" method="POST">
+                                <<form action="../../app/controllers/userController.php" method="POST">
     <button type="submit" class="dropdown-item" name="logoutButton">
         <span>Logout</span>
     </button>
