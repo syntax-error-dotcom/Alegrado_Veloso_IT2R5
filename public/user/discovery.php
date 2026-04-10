@@ -6,20 +6,28 @@ include(__DIR__ . '/includes/header.php');
 include(__DIR__ . '/includes/sidebar.php');
 include(__DIR__ . '/includes/topbar.php');
 
-// Fetch books from API
-ob_start();
-include(__DIR__ . '/../api/get-discovery-books.php');
-$json = ob_get_clean();
-$booksData = json_decode($json, true);
-$recommendedBooks = $booksData['recommended'] ?? [];
-$newBooks = $booksData['new'] ?? [];
+include(__DIR__ . '/../../app/config/config.php');
 
-// Add image URLs
-foreach ($recommendedBooks as &$book) {
-    $book['image'] = '/api/get-book-image.php?uuid=' . $book['uuid'];
+// Get 4 random recommended books
+$sqlRecommended = "SELECT uuid, title, author, description FROM books ORDER BY RAND() LIMIT 4";
+$resultRecommended = $conn->query($sqlRecommended);
+$recommendedBooks = [];
+if ($resultRecommended && $resultRecommended->num_rows > 0) {
+    while ($row = $resultRecommended->fetch_assoc()) {
+        $row['image'] = '/api/get-book-image.php?uuid=' . $row['uuid'];
+        $recommendedBooks[] = $row;
+    }
 }
-foreach ($newBooks as &$book) {
-    $book['image'] = '/api/get-book-image.php?uuid=' . $book['uuid'];
+
+// Get 4 most recent books
+$sqlNew = "SELECT uuid, title, author, description FROM books ORDER BY book_id DESC LIMIT 4";
+$resultNew = $conn->query($sqlNew);
+$newBooks = [];
+if ($resultNew && $resultNew->num_rows > 0) {
+    while ($row = $resultNew->fetch_assoc()) {
+        $row['image'] = '/api/get-book-image.php?uuid=' . $row['uuid'];
+        $newBooks[] = $row;
+    }
 }
 ?>
 
