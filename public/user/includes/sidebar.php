@@ -9,7 +9,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">User Elibrary <sup>2</sup></div>
             </a>
 
             <!-- Divider -->
@@ -27,6 +27,13 @@
                 <a class="nav-link" href="./discovery.php">
                     <i class="fas fa-fw fa-book-open"></i>
                     <span>Discovery</span>
+                </a>
+            </li>
+
+               <li class="nav-item">
+                <a class="nav-link" href="./barrowing.php">
+                    <i class="fas fa-fw fa-book-open"></i>
+                    <span>Barrowing</span>
                 </a>
             </li>
 
