@@ -4,9 +4,9 @@ header("Cache-Control: no-cache, must-revalidate");
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 
 include('../../app/middleware/admin.php');
-include('./includes/header.php');
-include('./includes/sidebar.php');
-include('./includes/topbar.php');
+include(__DIR__ . '/includes/header.php');
+include(__DIR__ . '/includes/sidebar.php');
+include(__DIR__ . '/includes/topbar.php');
 ?>
 
 <!-- Begin Page Content -->
@@ -309,7 +309,7 @@ include('./includes/topbar.php');
                                 <div class="card-body">
                                     <div class="text-center">
                                         <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                            src="../assets/img/undraw_posting_photo.svg" alt="...">
+                                            src="assets/img/undraw_posting_photo.svg" alt="...">
                                     </div>
                                     <p>Add some quality, svg illustrations to your project courtesy of <a
                                             target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
