@@ -14,7 +14,7 @@ $resultRecommended = $conn->query($sqlRecommended);
 $recommendedBooks = [];
 if ($resultRecommended && $resultRecommended->num_rows > 0) {
     while ($row = $resultRecommended->fetch_assoc()) {
-        $row['image'] = '/api/get-book-image.php?uuid=' . $row['uuid'];
+        $row['image'] = '../api/get-book-image.php?uuid=' . $row['uuid'];
         $recommendedBooks[] = $row;
     }
 }
@@ -25,7 +25,7 @@ $resultNew = $conn->query($sqlNew);
 $newBooks = [];
 if ($resultNew && $resultNew->num_rows > 0) {
     while ($row = $resultNew->fetch_assoc()) {
-        $row['image'] = '/api/get-book-image.php?uuid=' . $row['uuid'];
+        $row['image'] = '../api/get-book-image.php?uuid=' . $row['uuid'];
         $newBooks[] = $row;
     }
 }
@@ -54,7 +54,6 @@ if ($resultNew && $resultNew->num_rows > 0) {
                     <img src="<?php echo $book['image']; ?>" alt="<?php echo $book['title']; ?>">
                     <h3><?php echo $book['title']; ?></h3>
                     <p><?php echo $book['description']; ?></p>
-                    <button class="btn btn-success read-btn">Read</button>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -70,7 +69,6 @@ if ($resultNew && $resultNew->num_rows > 0) {
                     <img src="<?php echo $book['image']; ?>" alt="<?php echo $book['title']; ?>">
                     <h3><?php echo $book['title']; ?></h3>
                     <p><?php echo $book['description']; ?></p>
-                    <button class="btn btn-success read-btn">Read</button>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -86,13 +84,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const bookImages = document.querySelectorAll('.book-card img');
     
     bookImages.forEach(img => {
+        // Set up error handler
         img.onerror = function() {
-            // Use a gradient placeholder when image fails to load
+            console.error('Image failed to load:', this.src);
             this.style.display = 'none';
             const placeholder = document.createElement('div');
             placeholder.style.width = '100%';
             placeholder.style.height = '280px';
-            placeholder.style.backgroundColor = '#e0e0e0';
+            placeholder.style.backgroundColor = '#f5f5f5';
             placeholder.style.borderRadius = '5px';
             placeholder.style.marginBottom = '15px';
             placeholder.style.display = 'flex';
@@ -102,17 +101,17 @@ document.addEventListener('DOMContentLoaded', function() {
             placeholder.style.fontSize = '14px';
             placeholder.style.textAlign = 'center';
             placeholder.style.padding = '10px';
-            placeholder.innerHTML = 'Cover Image Not Available';
+            placeholder.style.border = '1px solid #e0e0e0';
+            placeholder.innerHTML = '<i class="fas fa-image" style="font-size: 40px; margin-bottom: 10px; width: 100%; color: #ccc;"></i>';
             this.parentNode.insertBefore(placeholder, this);
         };
         
-        // Trigger load to detect broken images
-        if (!img.complete) {
-            img.onload = function() {
-                this.style.opacity = '1';
-            };
-            img.style.opacity = '0.5';
-        }
+        // Set timeout to detect hanging requests
+        setTimeout(function() {
+            if (!img.complete && img.naturalHeight === 0) {
+                img.onerror();
+            }
+        }, 3000);
     });
 });
 </script>
