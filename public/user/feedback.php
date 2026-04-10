@@ -9,7 +9,7 @@ include(__DIR__ . '/includes/topbar.php');
 ?>
 
 
-<h1>accountability PAGE</h1>
+<h1>Feedback PAGE</h1>
 
 <?php
 include(__DIR__ . '/includes/footer.php');
