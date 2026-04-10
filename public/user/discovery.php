@@ -6,54 +6,19 @@ include(__DIR__ . '/includes/header.php');
 include(__DIR__ . '/includes/sidebar.php');
 include(__DIR__ . '/includes/topbar.php');
 
-// Dummy data for books
-$recommendedBooks = [
-    [
-        'title' => 'The Great Gatsby',
-        'description' => 'A classic novel about the American Dream.',
-        'image' => 'https://via.placeholder.com/150x200/4e73df/ffffff?text=Book+1'
-    ],
-    [
-        'title' => 'To Kill a Mockingbird',
-        'description' => 'A story of racial injustice and childhood.',
-        'image' => 'https://via.placeholder.com/150x200/1cc88a/ffffff?text=Book+2'
-    ],
-    [
-        'title' => '1984',
-        'description' => 'Dystopian novel about totalitarianism.',
-        'image' => 'https://via.placeholder.com/150x200/36b9cc/ffffff?text=Book+3'
-    ],
-    [
-        'title' => 'Pride and Prejudice',
-        'description' => 'A romantic novel by Jane Austen.',
-        'image' => 'https://via.placeholder.com/150x200/f6c23e/ffffff?text=Book+4'
-    ],
-  
-];
+// Fetch books from API
+$apiUrl = '/api/get-discovery-books.php';
+$booksData = json_decode(file_get_contents(__DIR__ . '/../' . $apiUrl), true);
+$recommendedBooks = $booksData['recommended'] ?? [];
+$newBooks = $booksData['new'] ?? [];
 
-$NewBooks = [
-    [
-        'title' => 'Harry Potter and the Sorcerer\'s Stone',
-        'description' => 'The start of a magical adventure.',
-        'image' => 'https://via.placeholder.com/150x200/4e73df/ffffff?text=Book+6'
-    ],
-    [
-        'title' => 'The Hobbit',
-        'description' => 'A fantasy adventure by J.R.R. Tolkien.',
-        'image' => 'https://via.placeholder.com/150x200/1cc88a/ffffff?text=Book+7'
-    ],
-    [
-        'title' => 'Dune',
-        'description' => 'Science fiction epic.',
-        'image' => 'https://via.placeholder.com/150x200/36b9cc/ffffff?text=Book+8'
-    ],
-    [
-        'title' => 'The Lord of the Rings',
-        'description' => 'Epic fantasy trilogy.',
-        'image' => 'https://via.placeholder.com/150x200/f6c23e/ffffff?text=Book+9'
-    ],
-
-];
+// Add image URLs
+foreach ($recommendedBooks as &$book) {
+    $book['image'] = '/api/get-book-image.php?uuid=' . $book['uuid'];
+}
+foreach ($newBooks as &$book) {
+    $book['image'] = '/api/get-book-image.php?uuid=' . $book['uuid'];
+}
 ?>
 
 <!-- Begin Page Content -->
@@ -90,7 +55,7 @@ $NewBooks = [
     <div class="section mb-5">
         <h2 class="section-title">New Books</h2>
         <div class="books-grid">
-            <?php foreach ($popularBooks as $book): ?>
+            <?php foreach ($newBooks as $book): ?>
                 <div class="book-card">
                     <img src="<?php echo $book['image']; ?>" alt="<?php echo $book['title']; ?>">
                     <h3><?php echo $book['title']; ?></h3>
