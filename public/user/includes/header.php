@@ -19,7 +19,8 @@
 
     
     
-    <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="./assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="./assets/css/style.css" rel="stylesheet">
 
 </head>
 
