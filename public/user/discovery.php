@@ -39,12 +39,6 @@ if ($resultNew && $resultNew->num_rows > 0) {
         <h1 class="h3 mb-0 text-gray-800">Discovery Page</h1>
     </div>
 
-    <!-- Search Bar -->
-    <div class="search-bar mb-4">
-        <input type="text" id="searchInput" placeholder="Search books..." class="form-control">
-        <button class="btn btn-primary mt-2" id="searchBtn"><i class="fas fa-search"></i> Search</button>
-    </div>
-
     <!-- Recommended Books Section -->
     <div class="section mb-5">
         <h2 class="section-title">Recommended Books</h2>
@@ -73,46 +67,114 @@ if ($resultNew && $resultNew->num_rows > 0) {
             <?php endforeach; ?>
         </div>
         <button class="btn btn-outline-primary see-more-btn">See More</button>
-    </div>
-
+    </div>  
 </div>
 <!-- /.container-fluid -->
 
 <script>
-// Handle broken images with fallback placeholder
+// Handle top bar search functionality
 document.addEventListener('DOMContentLoaded', function() {
-    const bookImages = document.querySelectorAll('.book-card img');
+    // Handle desktop search form
+    const topbarSearchForm = document.getElementById('topbarSearchForm');
+    const topbarSearchInput = document.getElementById('topbarSearchInput');
     
-    bookImages.forEach(img => {
-        // Set up error handler
-        img.onerror = function() {
-            console.error('Image failed to load:', this.src);
-            this.style.display = 'none';
-            const placeholder = document.createElement('div');
-            placeholder.style.width = '100%';
-            placeholder.style.height = '280px';
-            placeholder.style.backgroundColor = '#f5f5f5';
-            placeholder.style.borderRadius = '5px';
-            placeholder.style.marginBottom = '15px';
-            placeholder.style.display = 'flex';
-            placeholder.style.alignItems = 'center';
-            placeholder.style.justifyContent = 'center';
-            placeholder.style.color = '#999';
-            placeholder.style.fontSize = '14px';
-            placeholder.style.textAlign = 'center';
-            placeholder.style.padding = '10px';
-            placeholder.style.border = '1px solid #e0e0e0';
-            placeholder.innerHTML = '<i class="fas fa-image" style="font-size: 40px; margin-bottom: 10px; width: 100%; color: #ccc;"></i>';
-            this.parentNode.insertBefore(placeholder, this);
-        };
-        
-        // Set timeout to detect hanging requests
-        setTimeout(function() {
-            if (!img.complete && img.naturalHeight === 0) {
-                img.onerror();
+    if (topbarSearchForm) {
+        topbarSearchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = topbarSearchInput.value.trim();
+            if (query) {
+                performSearch(query);
             }
-        }, 3000);
-    });
+        });
+    }
+    
+    // Handle mobile search form
+    const mobileSearchForm = document.getElementById('mobileSearchForm');
+    const mobileSearchInput = document.getElementById('mobileSearchInput');
+    
+    if (mobileSearchForm) {
+        mobileSearchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = mobileSearchInput.value.trim();
+            if (query) {
+                performSearch(query);
+            }
+        });
+    }
+    
+    // Function to perform search
+    function performSearch(query) {
+        // Show loading state
+        showSearchResults([], true);
+        
+        // Make API call
+        fetch('../api/search-book.php?q=' + encodeURIComponent(query))
+            .then(response => response.json())
+            .then(data => {
+                showSearchResults(data, false);
+            })
+            .catch(error => {
+                console.error('Search error:', error);
+                showSearchResults([], false, 'Error occurred while searching');
+            });
+    }
+    
+    // Function to show search results
+    function showSearchResults(books, isLoading, error = null) {
+        // Remove existing search modal if any
+        const existingModal = document.getElementById('searchResultsModal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+        
+        // Create modal
+        const modal = document.createElement('div');
+        modal.id = 'searchResultsModal';
+        modal.className = 'modal fade';
+        modal.innerHTML = `
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Search Results</h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ${isLoading ? '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Searching...</div>' : 
+                          error ? `<div class="alert alert-danger">${error}</div>` :
+                          books.length === 0 ? '<div class="text-center">No books found matching your search.</div>' :
+                          `<div class="books-grid">${books.map(book => `
+                            <div class="book-card">
+                                <img src="../api/get-book-image.php?uuid=${book.uuid}" alt="${book.title}" 
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div style="width: 100%; height: 280px; background-color: #f5f5f5; border-radius: 5px; margin-bottom: 15px; display: none; align-items: center; justify-content: center; color: #999; font-size: 14px; text-align: center; padding: 10px; border: 1px solid #e0e0e0;">
+                                    <i class="fas fa-image" style="font-size: 40px; margin-bottom: 10px; width: 100%; color: #ccc;"></i>
+                                </div>
+                                <h3>${book.title}</h3>
+                                <p><strong>Author:</strong> ${book.author}</p>
+                            </div>
+                          `).join('')}</div>`
+                        }
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        $(modal).modal('show');
+    }
+    
+    // Handle broken images in search results
+    document.addEventListener('error', function(e) {
+        if (e.target.tagName === 'IMG' && e.target.closest('#searchResultsModal')) {
+            e.target.style.display = 'none';
+            const placeholder = e.target.nextElementSibling;
+            if (placeholder) {
+                placeholder.style.display = 'flex';
+            }
+        }
+    }, true);
 });
 </script>
 
