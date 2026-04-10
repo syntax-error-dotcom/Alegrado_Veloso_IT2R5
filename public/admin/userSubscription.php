@@ -13,5 +13,5 @@ include('./includes/topbar.php');
 <h1>User subscription PAGE</h1>
 
 <?php
-include(__DIR__ . './includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 ?>

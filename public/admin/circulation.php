@@ -11,5 +11,5 @@ include('./includes/topbar.php');
 <h1>Circulation Management</h1>
 
 <?php
-include(__DIR__ . './includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 ?>
