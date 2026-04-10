@@ -15,6 +15,13 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
+    <li class="nav-item">
+                <a class="nav-link" href="./discovery.php">
+                    <i class="fas fa-fw fa-book-open"></i>
+                    <span>Discovery</span>
+                </a>
+            </li>
+
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="./index.php">
@@ -22,14 +29,13 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            
-             <li class="nav-item">
-                <a class="nav-link" href="./discovery.php">
+
+    <li class="nav-item">
+                <a class="nav-link" href="./barrowing.php">
                     <i class="fas fa-fw fa-book-open"></i>
-                    <span>Discovery</span>
+                    <span>Barrowing</span>
                 </a>
             </li>
-
             <li class="nav-item">
                 <a class="nav-link" href="./accountability.php">
                     <i class="fas fa-fw fa-sync"></i>
