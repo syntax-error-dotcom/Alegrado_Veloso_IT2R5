@@ -22,89 +22,25 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Resource Management
-            </div>
-            
             
              <li class="nav-item">
-                <a class="nav-link" href="./catalogue.php">
+                <a class="nav-link" href="./discovery.php">
                     <i class="fas fa-fw fa-book-open"></i>
-                    <span>Catalogue</span>
+                    <span>Discovery</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="./inventory.php">
-                    <i class="fas fa-fw fa-boxes"></i>
-                    <span>Inventory</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="./circulation.php">
+                <a class="nav-link" href="./accountability.php">
                     <i class="fas fa-fw fa-sync"></i>
-                    <span>Circulation</span></a>
+                    <span>Accountability</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="./reports.php">
+                <a class="nav-link" href="./feedback.php">
                     <i class="fas fa-fw fa-sync"></i>
-                    <span>Reports</span></a>
+                    <span>Feedback</span></a>
             </li>
-
-             
-        
-            <!-- Heading -->
-            
-            
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            
-            <div class="sidebar-heading">
-                Users Management
-            </div>
-
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="./user.php">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Users</span></a>
-            </li>
-
-
-            <!-- Nav Item - Tables -->  
-            <li class="nav-item">
-                <a class="nav-link" href="./userSubscription.php">
-                    <i class="fas fa-fw fa-user-check"></i>
-                    <span>User Subscriptions</span></a>
-            </li>
-
-
-
-             <hr class="sidebar-divider">
-            
-            <div class="sidebar-heading">
-                OTHERS
-            </div>
-
-            <li class="nav-item">
-                <a class="nav-link" href="./settings.php">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Settings Page</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="./help.php">
-                    <i class="fas fa-fw fa-question-circle"></i>
-                    <span>Help/Support</span></a>
-            </li>
-
-
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
