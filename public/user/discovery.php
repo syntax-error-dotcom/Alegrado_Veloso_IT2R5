@@ -7,8 +7,10 @@ include(__DIR__ . '/includes/sidebar.php');
 include(__DIR__ . '/includes/topbar.php');
 
 // Fetch books from API
-$apiUrl = '/api/get-discovery-books.php';
-$booksData = json_decode(file_get_contents(__DIR__ . '/../' . $apiUrl), true);
+ob_start();
+include(__DIR__ . '/../api/get-discovery-books.php');
+$json = ob_get_clean();
+$booksData = json_decode($json, true);
 $recommendedBooks = $booksData['recommended'] ?? [];
 $newBooks = $booksData['new'] ?? [];
 
