@@ -96,7 +96,7 @@ if (isset($_POST['register'])) {
     }
 
     //checks if emailAddress already exists in the database
-    $checkQuery = mysqli_query($conn, "SELECT id from users where 
+    $checkQuery = mysqli_query($conn, "SELECT user_id from users where 
     emailAddress='$email' LIMIT 1"); 
     if ($checkQuery && mysqli_num_rows($checkQuery) > 0) {
         $_SESSION['message'] = "Email address already exists.";
@@ -106,7 +106,7 @@ if (isset($_POST['register'])) {
     }
 
     //checks if username already exists in the database
-    $checkQuery = mysqli_query($conn, "SELECT id from users where 
+    $checkQuery = mysqli_query($conn, "SELECT user_id from users where 
     username='$username' LIMIT 1");
     if ($checkQuery && mysqli_num_rows($checkQuery) > 0) {
         $_SESSION['message'] = "Username already exists.";
