@@ -28,14 +28,10 @@ $recommendedBooks = [
         'description' => 'A romantic novel by Jane Austen.',
         'image' => 'https://via.placeholder.com/150x200/f6c23e/ffffff?text=Book+4'
     ],
-    [
-        'title' => 'The Catcher in the Rye',
-        'description' => 'A coming-of-age story.',
-        'image' => 'https://via.placeholder.com/150x200/e74a3b/ffffff?text=Book+5'
-    ]
+  
 ];
 
-$popularBooks = [
+$NewBooks = [
     [
         'title' => 'Harry Potter and the Sorcerer\'s Stone',
         'description' => 'The start of a magical adventure.',
@@ -56,11 +52,7 @@ $popularBooks = [
         'description' => 'Epic fantasy trilogy.',
         'image' => 'https://via.placeholder.com/150x200/f6c23e/ffffff?text=Book+9'
     ],
-    [
-        'title' => 'Neuromancer',
-        'description' => 'Cyberpunk classic.',
-        'image' => 'https://via.placeholder.com/150x200/e74a3b/ffffff?text=Book+10'
-    ]
+
 ];
 ?>
 
@@ -96,7 +88,7 @@ $popularBooks = [
 
     <!-- Popular Books Section -->
     <div class="section mb-5">
-        <h2 class="section-title">Popular Books</h2>
+        <h2 class="section-title">New Books</h2>
         <div class="books-grid">
             <?php foreach ($popularBooks as $book): ?>
                 <div class="book-card">
