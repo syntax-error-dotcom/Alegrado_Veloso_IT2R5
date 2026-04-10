@@ -72,6 +72,9 @@
             <script src="./assets/js/demo/chart-area-demo.js"></script>
             <script src="./assets/js/demo/chart-pie-demo.js"></script>
 
+            <!-- Custom script for Discovery Page -->
+            <script src="./assets/js/script.js"></script>
+
             <!-- sweetAlert2 Link -->
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
