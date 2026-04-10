@@ -80,6 +80,43 @@ if ($resultNew && $resultNew->num_rows > 0) {
 </div>
 <!-- /.container-fluid -->
 
+<script>
+// Handle broken images with fallback placeholder
+document.addEventListener('DOMContentLoaded', function() {
+    const bookImages = document.querySelectorAll('.book-card img');
+    
+    bookImages.forEach(img => {
+        img.onerror = function() {
+            // Use a gradient placeholder when image fails to load
+            this.style.display = 'none';
+            const placeholder = document.createElement('div');
+            placeholder.style.width = '100%';
+            placeholder.style.height = '280px';
+            placeholder.style.backgroundColor = '#e0e0e0';
+            placeholder.style.borderRadius = '5px';
+            placeholder.style.marginBottom = '15px';
+            placeholder.style.display = 'flex';
+            placeholder.style.alignItems = 'center';
+            placeholder.style.justifyContent = 'center';
+            placeholder.style.color = '#999';
+            placeholder.style.fontSize = '14px';
+            placeholder.style.textAlign = 'center';
+            placeholder.style.padding = '10px';
+            placeholder.innerHTML = 'Cover Image Not Available';
+            this.parentNode.insertBefore(placeholder, this);
+        };
+        
+        // Trigger load to detect broken images
+        if (!img.complete) {
+            img.onload = function() {
+                this.style.opacity = '1';
+            };
+            img.style.opacity = '0.5';
+        }
+    });
+});
+</script>
+
 <?php
 include(__DIR__ . '/includes/footer.php');
 ?>
