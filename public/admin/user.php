@@ -12,5 +12,5 @@ include('./includes/topbar.php');
 <h1>Users PAGE</h1>
 
 <?php
-include(__DIR__ . './includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 ?>
