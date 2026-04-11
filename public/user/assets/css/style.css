@@ -72,6 +72,13 @@ body {
     color: #333;
 }
 
+.book-card .book-author {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
 .book-card p {
     font-size: 14px;
     color: #666;

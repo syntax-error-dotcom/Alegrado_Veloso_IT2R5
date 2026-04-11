@@ -47,6 +47,7 @@ if ($resultNew && $resultNew->num_rows > 0) {
                 <div class="book-card">
                     <img src="<?php echo $book['image']; ?>" alt="<?php echo $book['title']; ?>">
                     <h3><?php echo $book['title']; ?></h3>
+                    <p class="book-author">Author: <?php echo $book['author']; ?></p>
                     <p><?php echo $book['description']; ?></p>
                 </div>
             <?php endforeach; ?>
@@ -62,6 +63,7 @@ if ($resultNew && $resultNew->num_rows > 0) {
                 <div class="book-card">
                     <img src="<?php echo $book['image']; ?>" alt="<?php echo $book['title']; ?>">
                     <h3><?php echo $book['title']; ?></h3>
+                    <p class="book-author">Author: <?php echo $book['author']; ?></p>
                     <p><?php echo $book['description']; ?></p>
                 </div>
             <?php endforeach; ?>
