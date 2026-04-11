@@ -17,7 +17,7 @@ if ($resultRecommended && $resultRecommended->num_rows > 0) {
         $row['image'] = '../api/get-book-image.php?uuid=' . $row['uuid'];
         $recommendedBooks[] = $row;
     }
-}
+}   
 
 // Get 4 most recent books
 $sqlNew = "SELECT uuid, title, author, description FROM books ORDER BY book_id DESC LIMIT 4";
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <span>&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
                         ${isLoading ? '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Searching...</div>' : 
                           error ? `<div class="alert alert-danger">${error}</div>` :
                           books.length === 0 ? '<div class="text-center">No books found matching your search.</div>' :
