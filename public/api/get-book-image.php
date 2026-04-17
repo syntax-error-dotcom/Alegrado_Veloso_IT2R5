@@ -1,5 +1,5 @@
 <?php
-include(dirname(__DIR__, 2) . '/app/config/config.php');
+include('../../app/config/config.php');
 
 if (isset($_GET['uuid'])) {
     $uuid = $_GET['uuid'];
