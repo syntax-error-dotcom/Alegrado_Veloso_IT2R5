@@ -102,7 +102,7 @@ if ($resultNew && $resultNew->num_rows > 0) {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="bookNowBtn">Book Now</button>
+                <button type="button" class="btn btn-primary" id="bookNowBtn">Reserve Now</button>
             </div>
         </div>
     </div>
@@ -121,10 +121,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function showBookDetails(uuid) {
+    console.log('Fetching details for uuid:', uuid);
     // Fetch book details
     fetch('../api/get-book-details.php?uuid=' + encodeURIComponent(uuid))
-        .then(response => response.json())
+        .then(response => {
+            console.log('Response status:', response.status);
+            return response.json();
+        })
         .then(data => {
+            console.log('Received data:', data);
             if (data.error) {
                 alert('Book not found');
                 return;
@@ -155,10 +160,10 @@ function showBookDetails(uuid) {
 // Handle Book Now button
 document.getElementById('bookNowBtn').addEventListener('click', function() {
     const uuid = this.getAttribute('data-uuid');
-    bookNow(uuid);
+    reserveNow(uuid);
 });
 
-function bookNow(uuid) {
+function reserveNow(uuid) {
     // Send POST request to user controller
     fetch('controller.php', {
         method: 'POST',
@@ -170,15 +175,15 @@ function bookNow(uuid) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert('Book booked successfully!');
+            alert('Book reserved successfully!');
             $('#bookDetailsModal').modal('hide');
         } else {
-            alert('Error booking book: ' + (data.message || 'Unknown error'));
+            alert('Error reserving book: ' + (data.message || 'Unknown error'));
         }
     })
     .catch(error => {
-        console.error('Error booking book:', error);
-        alert('Error booking book');
+        console.error('Error reserving book:', error);
+        alert('Error reserving book');
     });
 }
 

@@ -7,8 +7,8 @@ if (isset($_POST['bookNow']) && isset($_POST['uuid'])) {
     $uuid = $_POST['uuid'];
     $user_id = $_SESSION['user_id'];
     
-    // Insert into borrowings table
-    $sql = "INSERT INTO borrowings (user_id, book_uuid, borrow_date, status) VALUES (?, ?, NOW(), 'borrowed')";
+    // Insert into reservation table
+    $sql = "INSERT INTO reservation (user_id, book_uuid, reservation_date, status) VALUES (?, ?, NOW(), 'reserved')";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("is", $user_id, $uuid);
     
@@ -17,7 +17,7 @@ if (isset($_POST['bookNow']) && isset($_POST['uuid'])) {
         echo json_encode(['success' => true]);
     } else {
         header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'message' => 'Failed to book the book']);
+        echo json_encode(['success' => false, 'message' => 'Failed to reserve the book']);
     }
     
     $stmt->close();

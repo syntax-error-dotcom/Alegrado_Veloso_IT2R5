@@ -16,13 +16,21 @@ if (isset($_GET['uuid'])) {
     if ($result && $result->num_rows > 0) {
         $book = $result->fetch_assoc();
         
-        $availabilitySql = "SELECT COUNT(*) as borrowed FROM borrowings WHERE book_uuid = ? AND status = 'borrowed'";
+        // Check availability (assuming a reservation table with status)
+        $book['availability'] = 'Available'; // Default to available
+        $availabilitySql = "SELECT COUNT(*) as reserved FROM reservation WHERE book_uuid = ? AND status = 'reserved'";
         $availStmt = $conn->prepare($availabilitySql);
-        $availStmt->bind_param("s", $uuid);
-        $availStmt->execute();
-        $availResult = $availStmt->get_result();
-        $availRow = $availResult->fetch_assoc();
-        $book['availability'] = $availRow['borrowed'] == 0 ? 'Available' : 'Borrowed';
+        if ($availStmt) {
+            $availStmt->bind_param("s", $uuid);
+            if ($availStmt->execute()) {
+                $availResult = $availStmt->get_result();
+                if ($availResult) {
+                    $availRow = $availResult->fetch_assoc();
+                    $book['availability'] = $availRow['reserved'] == 0 ? 'Available' : 'Reserved';
+                }
+            }
+            $availStmt->close();
+        }
         
         header('Content-Type: application/json');
         echo json_encode($book);
