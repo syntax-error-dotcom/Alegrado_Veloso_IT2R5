@@ -4,17 +4,30 @@ include('../../app/config/config.php');
 if (isset($_GET['uuid'])) {
     $uuid = $_GET['uuid'];
     
-    $sql = "SELECT b.uuid, b.title, b.author, b.publisher, b.yearPublished, b.category_id, b.description, c.category_name 
-            FROM books b 
-            LEFT JOIN categories c ON b.category_id = c.category_id 
-            WHERE b.uuid = ?";
+    $sql = "SELECT uuid, title, author, description FROM books WHERE uuid = ?";
     $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        header('Content-Type: application/json');
+        http_response_code(500);
+        echo json_encode(['error' => 'Database prepare error: ' . $conn->error]);
+        exit();
+    }
     $stmt->bind_param("s", $uuid);
-    $stmt->execute();
+    if (!$stmt->execute()) {
+        header('Content-Type: application/json');
+        http_response_code(500);
+        echo json_encode(['error' => 'Database execute error: ' . $stmt->error]);
+        exit();
+    }
     $result = $stmt->get_result();
     
     if ($result && $result->num_rows > 0) {
         $book = $result->fetch_assoc();
+        
+        // Add default values for missing fields
+        $book['publisher'] = $book['publisher'] ?? 'N/A';
+        $book['yearPublished'] = $book['yearPublished'] ?? 'N/A';
+        $book['category_name'] = $book['category_name'] ?? 'N/A';
         
         // Check availability (assuming a reservation table with status)
         $book['availability'] = 'Available'; // Default to available
