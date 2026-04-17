@@ -4,7 +4,10 @@ include('../../app/config/config.php');
 if (isset($_GET['uuid'])) {
     $uuid = $_GET['uuid'];
     
-    $sql = "SELECT uuid, title, author, publisher, yearPublished, category_id, description FROM books WHERE uuid = ?";
+    $sql = "SELECT b.uuid, b.title, b.author, b.publisher, b.yearPublished, b.category_id, b.description, c.category_name 
+            FROM books b 
+            LEFT JOIN categories c ON b.category_id = c.category_id 
+            WHERE b.uuid = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $uuid);
     $stmt->execute();
@@ -12,6 +15,15 @@ if (isset($_GET['uuid'])) {
     
     if ($result && $result->num_rows > 0) {
         $book = $result->fetch_assoc();
+        
+        $availabilitySql = "SELECT COUNT(*) as borrowed FROM borrowings WHERE book_uuid = ? AND status = 'borrowed'";
+        $availStmt = $conn->prepare($availabilitySql);
+        $availStmt->bind_param("s", $uuid);
+        $availStmt->execute();
+        $availResult = $availStmt->get_result();
+        $availRow = $availResult->fetch_assoc();
+        $book['availability'] = $availRow['borrowed'] == 0 ? 'Available' : 'Borrowed';
+        
         header('Content-Type: application/json');
         echo json_encode($book);
     } else {

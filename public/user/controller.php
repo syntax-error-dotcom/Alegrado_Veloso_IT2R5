@@ -1,7 +1,7 @@
 <?php
 session_start();
-$root = dirname(__DIR__);
-include($root . '/config/config.php');
+$root = dirname(__DIR__, 2);
+include($root . '/app/config/config.php');
 
 if (isset($_POST['bookNow']) && isset($_POST['uuid'])) {
     $uuid = $_POST['uuid'];
@@ -31,9 +31,7 @@ if (isset($_POST['bookNow']) && isset($_POST['uuid'])) {
 
     header("Location: /eLibrary/public/login.php");
     exit();
-
-
 } else {
     exit();
 }
-
+?>
