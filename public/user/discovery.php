@@ -115,7 +115,12 @@ document.addEventListener('DOMContentLoaded', function() {
     bookCards.forEach(card => {
         card.addEventListener('click', function() {
             const uuid = this.getAttribute('data-uuid');
-            showBookDetails(uuid);
+            console.log('Clicked book card, uuid:', uuid);
+            if (uuid) {
+                showBookDetails(uuid);
+            } else {
+                console.error('No uuid found on book card');
+            }
         });
     });
 });

@@ -1,5 +1,14 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 0); // Don't display errors in output
 include('../../app/config/config.php');
+
+if (!$conn) {
+    header('Content-Type: application/json');
+    http_response_code(500);
+    echo json_encode(['error' => 'Database connection failed']);
+    exit();
+}
 
 if (isset($_GET['uuid'])) {
     $uuid = $_GET['uuid'];
