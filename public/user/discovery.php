@@ -14,7 +14,7 @@ $resultRecommended = $conn->query($sqlRecommended);
 $recommendedBooks = [];
 if ($resultRecommended && $resultRecommended->num_rows > 0) {
     while ($row = $resultRecommended->fetch_assoc()) {
-        $row['image'] = '../api/get-book-image.php?uuid=' . $row['uuid'];
+        $row['image'] = '/eLibrary/public/api/get-book-image.php?uuid=' . $row['uuid'];
         $recommendedBooks[] = $row;
     }
 }   
@@ -25,7 +25,7 @@ $resultNew = $conn->query($sqlNew);
 $newBooks = [];
 if ($resultNew && $resultNew->num_rows > 0) {
     while ($row = $resultNew->fetch_assoc()) {
-        $row['image'] = '../api/get-book-image.php?uuid=' . $row['uuid'];
+        $row['image'] = '/eLibrary/public/api/get-book-image.php?uuid=' . $row['uuid'];
         $newBooks[] = $row;
     }
 }
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function showBookDetails(uuid) {
     console.log('Fetching details for uuid:', uuid);
     // Fetch book details
-    fetch('../api/get-book-details.php?uuid=' + encodeURIComponent(uuid))
+    fetch('/eLibrary/public/api/get-book-details.php?uuid=' + encodeURIComponent(uuid))
         .then(response => {
             console.log('Response status:', response.status);
             return response.json();
@@ -141,7 +141,7 @@ function showBookDetails(uuid) {
             }
             
             // Populate modal
-            document.getElementById('bookImage').src = '../api/get-book-image.php?uuid=' + data.uuid;
+            document.getElementById('bookImage').src = '/eLibrary/public/api/get-book-image.php?uuid=' + data.uuid;
             document.getElementById('bookTitle').textContent = data.title;
             document.getElementById('bookAuthor').textContent = data.author;
             document.getElementById('bookPublisher').textContent = data.publisher;
@@ -170,7 +170,7 @@ document.getElementById('bookNowBtn').addEventListener('click', function() {
 
 function reserveNow(uuid) {
     // Send POST request to user controller
-    fetch('controller.php', {
+    fetch('/eLibrary/public/user/controller.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
         showSearchResults([], true);
         
         // Make API call
-        fetch('../api/search-book.php?q=' + encodeURIComponent(query))
+        fetch('/eLibrary/public/api/search-book.php?q=' + encodeURIComponent(query))
             .then(response => response.json())
             .then(data => {
                 showSearchResults(data, false);
@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function() {
                           books.length === 0 ? '<div class="text-center">No books found matching your search.</div>' :
                           `<div class="books-grid">${books.map(book => `
                             <div class="book-card" data-uuid="${book.uuid}">
-                                <img src="../api/get-book-image.php?uuid=${book.uuid}" alt="${book.title}" 
+                                <img src="/eLibrary/public/api/get-book-image.php?uuid=${book.uuid}" alt="${book.title}" 
                                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                 <div style="width: 100%; height: 280px; background-color: #f5f5f5; border-radius: 5px; margin-bottom: 15px; display: none; align-items: center; justify-content: center; color: #999; font-size: 14px; text-align: center; padding: 10px; border: 1px solid #e0e0e0;">
                                     <i class="fas fa-image" style="font-size: 40px; margin-bottom: 10px; width: 100%; color: #ccc;"></i>
