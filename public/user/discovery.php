@@ -131,7 +131,19 @@ function showBookDetails(uuid) {
     fetch('/eLibrary/public/api/get-book-details.php?uuid=' + encodeURIComponent(uuid))
         .then(response => {
             console.log('Response status:', response.status);
-            return response.json();
+            return response.text().then(text => {
+                if (!response.ok) {
+                    console.error('Non-OK response body:', text);
+                    throw new Error('Server returned status ' + response.status);
+                }
+                try {
+                    const data = JSON.parse(text);
+                    return data;
+                } catch (err) {
+                    console.error('Invalid JSON response:', text);
+                    throw err;
+                }
+            });
         })
         .then(data => {
             console.log('Received data:', data);

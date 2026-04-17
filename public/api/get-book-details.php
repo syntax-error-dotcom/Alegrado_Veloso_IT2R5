@@ -1,9 +1,18 @@
 <?php
-error_reporting(0);
+error_reporting(E_ALL);
 ini_set('display_errors', 0);
-include(dirname(__DIR__, 2) . '/app/config/config.php');
 
-if (!$conn) {
+$configPath = dirname(dirname(__DIR__)) . '/app/config/config.php';
+if (!file_exists($configPath)) {
+    header('Content-Type: application/json');
+    http_response_code(500);
+    echo json_encode(['error' => 'Config file not found']);
+    exit();
+}
+
+include($configPath);
+
+if (!isset($conn) || !$conn) {
     header('Content-Type: application/json');
     http_response_code(500);
     echo json_encode(['error' => 'Database connection failed']);
@@ -12,6 +21,7 @@ if (!$conn) {
 
 if (isset($_GET['uuid'])) {
     $uuid = $_GET['uuid'];
+
     
     $sql = "SELECT uuid, title, author, description FROM books WHERE uuid = ?";
     $stmt = $conn->prepare($sql);
@@ -28,10 +38,17 @@ if (isset($_GET['uuid'])) {
         echo json_encode(['error' => 'Database execute error: ' . $stmt->error]);
         exit();
     }
-    $result = $stmt->get_result();
+    $stmt->store_result();
     
-    if ($result && $result->num_rows > 0) {
-        $book = $result->fetch_assoc();
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($bookUuid, $title, $author, $description);
+        $stmt->fetch();
+        $book = [
+            'uuid' => $bookUuid,
+            'title' => $title,
+            'author' => $author,
+            'description' => $description,
+        ];
         
         // Add default values for missing fields
         $book['publisher'] = $book['publisher'] ?? 'N/A';
@@ -45,11 +62,9 @@ if (isset($_GET['uuid'])) {
         if ($availStmt) {
             $availStmt->bind_param("s", $uuid);
             if ($availStmt->execute()) {
-                $availResult = $availStmt->get_result();
-                if ($availResult) {
-                    $availRow = $availResult->fetch_assoc();
-                    $book['availability'] = $availRow['reserved'] == 0 ? 'Available' : 'Reserved';
-                }
+                $availStmt->bind_result($reservedCount);
+                $availStmt->fetch();
+                $book['availability'] = $reservedCount == 0 ? 'Available' : 'Reserved';
             }
             $availStmt->close();
         }
