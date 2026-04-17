@@ -1,6 +1,6 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1); // Temporarily show errors
+error_reporting(0);
+ini_set('display_errors', 0);
 include(dirname(__DIR__, 2) . '/app/config/config.php');
 
 if (!$conn) {
@@ -12,13 +12,6 @@ if (!$conn) {
 
 if (isset($_GET['uuid'])) {
     $uuid = $_GET['uuid'];
-    
-    // Test response
-    if ($uuid === 'test') {
-        header('Content-Type: application/json');
-        echo json_encode(['test' => 'API is working']);
-        exit();
-    }
     
     $sql = "SELECT uuid, title, author, description FROM books WHERE uuid = ?";
     $stmt = $conn->prepare($sql);
