@@ -42,14 +42,20 @@ if ($transactionsResult && $transactionsResult->num_rows > 0) {
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <div class="mb-4">
-        <h1 class="h3 mb-2 text-gray-800">Circulation</h1>
+   <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-2 text-gray-800">Request</h1>
 
         <!-- Content Row -->
-        <div class="row">
+       
+        <button type="button" class="btn btn-info shadow-sm text-white mr-2" 
+                    onclick="location.reload();">
+                <i class="fa fa-sync-alt fa-sm text-white-50"></i> Refresh
+        </button>
 
-           
-        </div>
+
+
+
+
     </div>
      <div class="card shadow mb-4">
         <div class="card-header py-3">
